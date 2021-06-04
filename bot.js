@@ -2,8 +2,6 @@ const Discord = require("discord.js");
 require('discord-reply');
 const client = new Discord.Client();
 const mongoose = require('mongoose');
-let lvlinfo = ["829399994384777228","829400116758183986","829400127420629053","829400137041707009","829400147426934794"];//maxlevel
-let lvlans = ["dude","second","third","firth"];//maxlevel
 client.on("ready", () => {
     client.user.setActivity("Puzzles! Dm to start!", { type: "PLAYING"})
     });
