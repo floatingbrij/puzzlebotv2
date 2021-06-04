@@ -114,6 +114,7 @@ client.on("message",async function(message)
   }
 
 })
+wordlist = ["faggot","negroid","nigger","nigga","tranny","trannies","chink","nibba","retard","retarded","fag","trannie","nibber","nibbers","177013","kekma.net","niqqa","niqqer","nigward",'黑鬼'];
 
 client.on("message",async function(message){
   if(message.author.bot) return;
@@ -293,7 +294,16 @@ client.on("message",async function(message){
     message.lineReply('thankyou  🥰')
   }
   if(message.content.startsWith(`+dm`))
+  {	
+  for(var x = 0;x<wordlist.length;x++)
   {
+    if(message.content.includes(wordlist[x]))
+    {
+    message.lineReply(`No bad words bud!`);
+    console.log(`${message.member.tag} sent ${wordlist[x]}`)
+    return;
+    }
+   }
     splitmessage=message.content.split(` `);
     splitmessage.splice(0,1);
     if(splitmessage.length === 0){
