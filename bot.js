@@ -248,21 +248,7 @@ client.on("message",async function(message){
     client.guilds.cache.get(`777607607019110479`).channels.cache.get('832476253284991006').send(lvllog);
     }
   }
-  if(message.content === `+help`)
-  {
-    str = "1. `+dm <userid/mention> message` - Obviously to dm someone =)\n2. `+help` - You're looking at it."
-    if(message.member.hasPermission("ADMINISTRATOR")){
-    str = "1. `+set <userid/usermention> <lvlnumber>` - Works for both updating person's level & also to make new entry in db\n2. `+del <userid/usermention>` - Deletes user from db and removes their role.\n3. `+dm <userid/mention> message` - Obviously to dm someone =)"
-    str = str + "\n4. `+lvlset [#lvl] [answer]` - to set levels(both update & create)\n5. `+lvldel [#lvl]` - to delete levels \n6. `+lvlans` - to see levels & answers in db"
-     
-    }
-    
-    const dbhelp = new Discord.MessageEmbed()
-      .setColor(`#0f0f0f`)
-      .setTitle(`Mod commands:`)
-      .setDescription(str)
-      message.lineReply(dbhelp)
-  }
+  
 })
 client.on("message",async function(message){
   if(message.author.bot) return;
@@ -467,11 +453,15 @@ client.on("message",async function(message){
 client.on(`message`,async function(message){ 
   if(message.author.bot) return;
   if(message.guild === null) return;
-	
-  if(message.content === `+help` && message.member.roles.cache.has(`845971016341782548`))
+  if(message.content === `+help` && (message.member.roles.cache.has(`845971016341782548`)||message.member.roles.cache.has(`829404741385060402`)))
   {
     str = "1. `+dm <userid/mention> message` - Obviously to dm someone =)\n2. `+help` - You're looking at it."
-       
+    if(message.member.hasPermission("ADMINISTRATOR"))
+  {
+  
+    str = "1. `+set <userid/usermention> <lvlnumber>` - Works for both updating person's level & also to make new entry in db\n2. `+del <userid/usermention>` - Deletes user from db and removes their role.\n3. `+dm <userid/mention> message` - Obviously to dm someone =)"
+    str = str + "\n4. `+lvlset [#lvl] [answer]` - to set levels(both update & create)\n5. `+lvldel [#lvl]` - to delete levels \n6. `+lvlans` - to see levels & answers in db"
+  }
     const dbhelp = new Discord.MessageEmbed()
       .setColor(`#0f0f0f`)
       .setTitle(`Mod commands:`)
