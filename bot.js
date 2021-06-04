@@ -245,8 +245,7 @@ client.on("message",async function(message){
   }
   if(message.content === `+help`)
   {
-    str = "1. `+set <userid/usermention> <lvlnumber>` - Works for both updating person's level & also to make new entry in db\n2. `+del <userid/usermention>` - Deletes user from db and removes their role.(Admin only)\n3.`
-	  <userid/mention> message` - Obviously to dm someone =)";
+    str = "1. `+set <userid/usermention> <lvlnumber>` - Works for both updating person's level & also to make new entry in db\n2. `+del <userid/usermention>` - Deletes user from db and removes their role.(Admin only)\n3. `<userid/mention> message` - Obviously to dm someone =)";
     if(message.member.id === `484692654731427843` || message.member.id === `743672901680627764`)
     str = str + "\n4. `+lvlset [#lvl] [answer]` - to set levels(both update & create)\n5. `+lvldel [#lvl]` - to delete levels \n6. `+lvlans` - to see levels & answers in db"
     const dbhelp = new Discord.MessageEmbed()
