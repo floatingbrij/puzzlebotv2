@@ -121,7 +121,12 @@ client.on("message",async function(message){
   if(message.author.bot) return;
   if(message.guild === null) return;
   if(!message.member.roles.cache.find(role=>role.name===`Puzzle Moderator`)) return;
-  if(message.content.startsWith(`+set`))
+  if(message.content.startsWith(`+set`) && !(message.member.hasPermission("ADMINISTRATOR")))
+  {
+	  message.lineReply("You are missing `administrator` perms to run this command.");
+  }
+  
+  if(message.content.startsWith(`+set`) && (message.member.hasPermission("ADMINISTRATOR")))
   {
     let splitmessage = message.content.split(` `);
     splitmessage.splice(0,1);
@@ -245,9 +250,13 @@ client.on("message",async function(message){
   }
   if(message.content === `+help`)
   {
-    str = "1. `+set <userid/usermention> <lvlnumber>` - Works for both updating person's level & also to make new entry in db\n2. `+del <userid/usermention>` - Deletes user from db and removes their role.(Admin only)\n3. `<userid/mention> message` - Obviously to dm someone =)";
-    if(message.member.id === `484692654731427843` || message.member.id === `743672901680627764`)
+    str = "1. `+dm <userid/mention> message` - Obviously to dm someone =)\n2. `+help` - You're looking at it."
+    if(message.member.hasPermission("ADMINISTRATOR")){
+    str = "1. `+set <userid/usermention> <lvlnumber>` - Works for both updating person's level & also to make new entry in db\n2. `+del <userid/usermention>` - Deletes user from db and removes their role.\n3. `<userid/mention> message` - Obviously to dm someone =)"
     str = str + "\n4. `+lvlset [#lvl] [answer]` - to set levels(both update & create)\n5. `+lvldel [#lvl]` - to delete levels \n6. `+lvlans` - to see levels & answers in db"
+     
+    }
+    
     const dbhelp = new Discord.MessageEmbed()
       .setColor(`#0f0f0f`)
       .setTitle(`Mod commands:`)
@@ -290,7 +299,7 @@ client.on("message",async function(message){
 client.on("message",async function(message){
   if(message.author.bot) return;
   if(message.guild === null) return;
-  if(!message.member.roles.cache.find(role=>role.name===`Puzzle Moderator`)) return;
+  if(!message.member.roles.cache.find(role=>role.name===`Puzzle Moderator`) && !message.member.roles.cache.find(role=>role.name===`Sponsor`) ) return;
   if(message.content === `aple`)
   {
     message.lineReply('aple')
@@ -455,6 +464,22 @@ client.on("message",async function(message){
 
 })
 
+client.on(`message,async function(message){ 
+  if(message.author.bot) return;
+  if(message.guild === null) return;
+	
+  if(message.content === `+help` && message.members.roles.cache.has(`845971016341782548`))
+  {
+    str = "1. `+dm <userid/mention> message` - Obviously to dm someone =)\n2. `+help` - You're looking at it."
+    
+    
+    const dbhelp = new Discord.MessageEmbed()
+      .setColor(`#0f0f0f`)
+      .setTitle(`Mod commands:`)
+      .setDescription(str)
+      message.lineReply(dbhelp)
+  }
+})
 client.on(`message`,async function(message){
   if(message.author.bot) return;
   if(message.guild === null) return;
