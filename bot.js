@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 let lvlinfo = ["829399994384777228","829400116758183986","829400127420629053","829400137041707009","829400147426934794"];//maxlevel
 let lvlans = ["dude","second","third","firth"];//maxlevel
 client.on("ready", () => {
-    client.user.setActivity("Puzzels! Dm to start!", { type: "PLAYING"})
+    client.user.setActivity("Puzzles! Dm to start!", { type: "PLAYING"})
     });
 
 mongodb_srv= `mongodb+srv://brij:brijisidiot@pizzlebotdata.2ihyg.mongodb.net/puzzelbotsdata?retryWrites=true&w=majority`;
@@ -24,7 +24,7 @@ mongoose.connect(mongodb_srv,
         console.log(err);
     });
 const profilem = require("./models/dbschema.js");
-
+const lvlmap = require("./models/dblvl.js");
 
 client.on("message",async function(message)
 {
@@ -33,6 +33,19 @@ client.on("message",async function(message)
   puzzelguild = client.guilds.cache.get(`777607607019110479`);
   if(puzzelguild.members.cache.get(`${message.author.id}`) === undefined) return;
   userdata = await profilem.findOne({userid: message.author.id});
+  anstothislevel = ``;
+  if(userdata)
+  {
+    console.log(userdata.level)
+    const hii =await lvlmap.findOne({lvl: userdata.level});
+    if(!hii)
+    {
+      client.guilds.cache.get(`777607607019110479`).channels.cache.get(`832673765854806116`).send(`<@484692654731427843> level ${userdata.level} has no answer`)
+      return;
+    }
+    anstothislevel = hii.lvlans;
+    console.log(anstothislevel)
+  }
   if(!userdata)
   {
     let newuser = await profilem.create({
@@ -65,7 +78,7 @@ client.on("message",async function(message)
       .setDescription(`[Level ${userdata.level} link](https://discord.com/channels/777607607019110479/${lvlinfo[userdata.level]})`)
     message.author.send(levelembed);
   }
-  else if(message.content === lvlans[userdata.level])
+  else if(message.content === anstothislevel)
   {
     let levelplus = userdata.level+1;
     const profileup = await profilem.findOneAndUpdate({
@@ -119,8 +132,18 @@ client.on("message",async function(message){
     }
     userid11 = splitmessage[0];
     userid11 = userid11.replace(/\D/g,'');
+    if(userid11 === undefined || userid11 === null || userid11 === `` || Number(userid11)<11111111111111111)
+    {
+      userid11 = splitmessage[0];
+      const user1 = client.users.cache.find(user => user.tag.toLowerCase().startsWith(userid11.toLowerCase())).id;
+      userid11 = user1;
+    }
     lvl = splitmessage[1];
     lvlnum = Number(lvl)
+    if(message.guild.members.cache.get(userid11).user.bot){
+      message.lineReply(`You can't dm bots.`);
+      return;
+    }
     if(client.guilds.cache.get(`777607607019110479`).members.cache.has(userid11))
     {
       if(lvlnum>=0 && lvlnum<=15) //maxlevel
@@ -138,8 +161,8 @@ client.on("message",async function(message){
           client.guilds.cache.get(`777607607019110479`).members.cache.get(`${userid11}`).roles.add(role.id);
           message.lineReply(`User successfully set. (${userid11} : ${lvlnum})`)
           const lvllog = new Discord.MessageEmbed()
-          setColor(`#0099ff`)
-          .setAuthor(`${userid11}`,message.guild.members.cache.get(userid11).user.displayAvatarURL({ dynamic: true, size: 256 }))
+          .setColor(`#0099ff`)
+          .setAuthor(`${message.guild.members.cache.get(userid11).user.tag}`,message.guild.members.cache.get(userid11).user.displayAvatarURL({ dynamic: true, size: 256 }))
           .setDescription(`<@${userid11}> has been set to level ${lvlnum} by <@${message.author.id}>`)
           client.guilds.cache.get(`777607607019110479`).channels.cache.get('832476253284991006').send(lvllog);
         }
@@ -159,7 +182,7 @@ client.on("message",async function(message){
           message.lineReply(`User successfully set. (${userid11} : ${lvlnum})`)
           const lvllog = new Discord.MessageEmbed()
             .setColor(`#0099ff`)
-            .setAuthor(`${userid11}`,message.guild.members.cache.get(userid11).user.displayAvatarURL({ dynamic: true, size: 256 }))
+            .setAuthor(`${message.guild.members.cache.get(userid11).user.tag}`,message.guild.members.cache.get(userid11).user.displayAvatarURL({ dynamic: true, size: 256 }))
             .setDescription(`<@${userid11}> has been set to level ${lvlnum} from level ${userdata.level} by <@${message.author.id}>`)
           client.guilds.cache.get(`777607607019110479`).channels.cache.get('832476253284991006').send(lvllog);
         }
@@ -177,6 +200,18 @@ client.on("message",async function(message){
     let splitmessage = message.content.split(` `);
     let userid11 = splitmessage[1];
     userid11 = userid11.replace(/\D/g,'');
+    if(userid11 === undefined || userid11 === null || userid11 === `` || Number(userid11)<11111111111111111)
+    {
+      userid11 = splitmessage[1];
+      const user1 = client.users.cache.find(user => user.tag.toLowerCase().startsWith(userid11.toLowerCase())).id;
+
+
+      userid11 = user1;
+    }
+    if(message.guild.members.cache.get(userid11).user.bot){
+      message.lineReply(`You can't dm bots.`);
+      return;
+    }
     userdata = await profilem.findOne({userid: userid11});
     if(!userdata)
     {
@@ -197,18 +232,21 @@ client.on("message",async function(message){
     client.guilds.cache.get(`777607607019110479`).members.cache.get(`${userid11}`).roles.remove(removerole.id);
     message.lineReply(`User ${userid11} successfully deleted.`)
     const lvllog = new Discord.MessageEmbed()
-    setColor(`#0099ff`)
-    .setAuthor(`${userid11}`,message.guild.members.cache.get(userid11).user.displayAvatarURL({ dynamic: true, size: 256 }))
+    .setColor(`#0099ff`)
+    .setAuthor(`${message.guild.members.cache.get(userid11).user.tag}`,message.guild.members.cache.get(userid11).user.displayAvatarURL({ dynamic: true, size: 256 }))
     .setDescription(`<@${userid11}> has been deleted from the db by <@${message.author.id}>`)
     client.guilds.cache.get(`777607607019110479`).channels.cache.get('832476253284991006').send(lvllog);
     }
   }
   if(message.content === `+help`)
   {
+    str = "1. `+set <userid/usermention> <lvlnumber>` - Works for both updating person's level & also to make new entry in db\n2. `+del <userid/usermention>` - Deletes user from db and removes their role.\n3.`-dm <userid/mention> message` - Obviously to dm someone =)";
+    if(message.member.id === `484692654731427843` || message.member.id === `743672901680627764`)
+    str = str + "\n4. `+lvlset [#lvl] [answer]` - to set levels(both update & create)\n5. `+lvldel [#lvl]` - to delete levels \n6. `+lvlans` - to see levels & answers in db"
     const dbhelp = new Discord.MessageEmbed()
       .setColor(`#0f0f0f`)
       .setTitle(`Mod commands:`)
-      .setDescription("1. `+set <userid/usermention> <lvlnumber>` - Works for both updating person's level & also to make new entry in db\n2. `+del <userid/usermention>` - Deletes user from db and removes their role.")
+      .setDescription(str)
       message.lineReply(dbhelp)
   }
 })
@@ -252,6 +290,10 @@ client.on("message",async function(message){
   {
     message.lineReply('aple')
   }
+  if(message.content === `good bot`)
+  {
+    message.lineReply('thankyou  🥰')
+  }
   if(message.content.startsWith(`-dm`))
   {
     splitmessage=message.content.split(` `);
@@ -262,6 +304,17 @@ client.on("message",async function(message){
     }
     userid11 = splitmessage[0];
     userid11 = userid11.replace(/\D/g,'');
+    if(userid11 === undefined || userid11 === null || userid11 === `` || Number(userid11)<11111111111111111)
+    {
+      userid11 = splitmessage[0];
+      const user1 = client.users.cache.find(user => user.tag.toLowerCase().startsWith(userid11.toLowerCase())).id;
+
+      userid11 = user1;
+    }
+    if(message.guild.members.cache.get(userid11).user.bot){
+      message.lineReply(`You can't dm bots.`);
+      return;
+    }
     if(message.guild.members.cache.get(userid11) === undefined)
     {
       message.lineReply(`Either ${userid11} isn't a valid id or that user might not be in the server.`)
@@ -274,10 +327,152 @@ client.on("message",async function(message){
       message.lineReply(`I can't send empty messages smh.`);
       return;
     }
-    message.guild.members.cache.get(userid11).send(msg).catch(()=>message.lineReply(`That user probably has dms **off**!!`)).then(()=>message.lineReply(`Successfully dm'd the given user.`))
+    tagg = message.guild.members.cache.get(userid11).user.tag;
+    idd = message.guild.members.cache.get(userid11).user.id;
+    message.guild.members.cache.get(userid11).send(msg).catch(()=>message.lineReply(`That user probably has dms **off**!!`)).then(()=>message.lineReply(`Successfully dm'd the given user(${tagg}: ${idd}).`))
 
 
   }
+  if(message.content === `-r0`)
+  {
+    const emb = new Discord.MessageEmbed()
+    .setColor(`#0f0f0f`)
+    .setThumbnail('https://cdn.discordapp.com/attachments/810186492172435456/849649459150848061/Staff.png')
+    .setAuthor(`Server Rule 0`)
+    .setDescription(`**Follow [Discord Terms of Service](https:\/\/discord.com\/terms)** <:Staff:849153294546501642>\n\n__Do not__ joke about being underage in the server. Our mods don't have time to try and understand your 'sarcasm'. Any attempt of joking about your or other members' being underage will result in a hardmute.`)
+    message.channel.send(emb)
+  }
+})
+client.on("message",async function(message){
+  if(message.author.bot) return;
+  if(message.guild === null) return;
+  if(message.author.id != `484692654731427843` &&message.author.id != `743672901680627764`) return;
+  if(message.content.startsWith(`+lvlset`))
+  {
+    let splitmessage = message.content.split(` `);
+    splitmessage.splice(0,1);
+    levelid = splitmessage[0];
+    lvlonlyid = levelid.replace(/\D/g,'');
+    if(!message.guild.channels.cache.has(lvlonlyid)){
+      message.lineReply('No such level.');
+      return;
+    }
+    levelnumber = message.guild.channels.cache.get(lvlonlyid).name;
+    lvlnumber = levelnumber.replace(/\D/g,'');
+    console.log(`${levelnumber} and ${lvlnumber}`)
+    if(Number(lvlnumber)<0 || Number(lvlnumber)>15 || lvlnumber === "")
+    {
+      message.lineReply(`That level doesn't look like a puzzle level.`)
+      return;
+    }
+    splitmessage.splice(0,1);
+    if(splitmessage.length=== 0){
+      message.lineReply(`where answer buddy.`)
+    }
+    answer = splitmessage.join(` `);
+
+    lvldata = await lvlmap.findOne({lvlid: lvlonlyid});
+
+    if(!lvldata)
+    {
+      let newlvl = await lvlmap.create({
+        lvlid: lvlonlyid,
+        lvl: Number(lvlnumber),
+        lvlans: answer
+      })
+
+      newlvl.save().then(()=>message.lineReply(`Successfully set new puzzle level ${lvlnumber}(<#${lvlonlyid}>): ${answer}`)).catch(()=>message.lineReply(`Unable to set db.`))
+    }
+    else{
+      const lvlupdate = await lvlmap.findOneAndUpdate({
+        lvlid: lvlonlyid,
+      },
+      {
+        $set: {
+          lvlid: lvlonlyid,
+          lvl: Number(lvlnumber),
+          lvlans: answer,
+        },
+      }).then(()=>message.lineReply(`Successfully set puzzle level ${lvlnumber}(<#${lvlonlyid}>): ${answer}`)).catch(()=>message.lineReply(`Unable to set db.`))
+
+    }
+  }
+  if(message.content.startsWith(`+lvldel`))
+  {
+    let splitmessage = message.content.split(` `);
+    splitmessage.splice(0,1);
+    levelid = splitmessage[0];
+    lvlonlyid = levelid.replace(/\D/g,'');
+    if(!message.guild.channels.cache.has(lvlonlyid)){
+      message.lineReply('No such level.');
+      return;
+    }
+    levelnumber = message.guild.channels.cache.get(lvlonlyid).name;
+    lvlnumber = levelnumber.replace(/\D/g,'');
+    if(Number(lvlnumber)<0 || Number(lvlnumber)>15 || lvlnumber ==="")
+    {
+      message.lineReply(`That level doesn't look like a puzzle level.`)
+      return;
+    }
+    lvldata = await lvlmap.findOne({lvlid: lvlonlyid});
+    if(!lvldata)
+    {
+      message.lineReply(`No such level in db`);
+      return;
+    }
+    else {
+      lvlmap.findOneAndDelete({lvlid: lvlonlyid}, function (err, docs) {
+    if (err){
+        console.log(err)
+    }
+    else{
+        console.log("Deleted level : ", docs);
+    }
+}).then(()=>message.lineReply(`Successfully deleted <#${lvlonlyid}> from db.`)).catch(()=>message.lineReply(`Unable to delete level from db`))
+    }
+
+  }
+  if(message.content === `+lvlans`)
+  {
+
+    str = ``;
+    
+    profileall = await lvlmap.find({}).sort({lvl: 1});
+    for(x in profileall)
+    {
+      lvl1 = 1+Number(x);
+      str = str+ `\n${lvl1}. Level ${profileall[x].lvl} <#${profileall[x].lvlid}>: ${profileall[x].lvlans}`;
+    }
+    if(str === ``)
+    {
+      message.lineReply(`Error with db`);
+    }
+    else{
+      const lvl1 = new Discord.MessageEmbed()
+        .setColor(`#0f0f0f`)
+        .setTitle(`Level Answers:`)
+        .setDescription(str)
+      message.lineReply(lvl1)
+    }
+  }
+
 })
 
+client.on(`message`,async function(message){
+  if(message.author.bot) return;
+  if(message.guild === null) return;
+  if(message.author.id != `484692654731427843`) return;
+  if(message.content === `+uchnl`)
+  { 
+    str = false;
+    for(var i=0; i<=30 ; i++)
+    { 
+      chnl = message.guild.channels.cache.find(channel=>channel.name === `level-${i}`);
+      rle = message.guild.roles.cache.find(r=>r.name.toLowerCase() === `Level ${i}`.toLowerCase());
+      chnl.updateOverwrite(message.guild.roles.cache.get(rle.id), { VIEW_CHANNEL: true });
+      console.log(chnl.id + ` `+ chnl.name);
+      console.log(rle.id+ ` `+ rle.name)
+    } 
+  }
+})
 client.login(`ODMyMjA0MjY5NDM1NzQ4MzUz.YHgYnw.MwMi-8Rq9D3QbgkcmLQ_TWc8iUY`)
