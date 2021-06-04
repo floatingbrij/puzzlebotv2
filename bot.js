@@ -252,7 +252,7 @@ client.on("message",async function(message){
   {
     str = "1. `+dm <userid/mention> message` - Obviously to dm someone =)\n2. `+help` - You're looking at it."
     if(message.member.hasPermission("ADMINISTRATOR")){
-    str = "1. `+set <userid/usermention> <lvlnumber>` - Works for both updating person's level & also to make new entry in db\n2. `+del <userid/usermention>` - Deletes user from db and removes their role.\n3. `<userid/mention> message` - Obviously to dm someone =)"
+    str = "1. `+set <userid/usermention> <lvlnumber>` - Works for both updating person's level & also to make new entry in db\n2. `+del <userid/usermention>` - Deletes user from db and removes their role.\n3. `+dm <userid/mention> message` - Obviously to dm someone =)"
     str = str + "\n4. `+lvlset [#lvl] [answer]` - to set levels(both update & create)\n5. `+lvldel [#lvl]` - to delete levels \n6. `+lvlans` - to see levels & answers in db"
      
     }
@@ -343,7 +343,7 @@ client.on("message",async function(message){
     }
     tagg = message.guild.members.cache.get(userid11).user.tag;
     idd = message.guild.members.cache.get(userid11).user.id;
-    message.guild.members.cache.get(userid11).send(msg).catch(()=>message.lineReply(`That user probably has dms **off**!!`)).then(()=>message.lineReply(`Successfully dm'd the given user(${tagg}: ${idd}).`))
+    message.guild.members.cache.get(userid11).send(msg).catch(()=>message.lineReply(`That user probably has dms **off**!!`)).then(()=>message.lineReply(`dm'd the given user(${tagg}: ${idd}).`))
 
 
   }
