@@ -121,7 +121,7 @@ client.on("message",async function(message){
   if(message.author.bot) return;
   if(message.guild === null) return;
   if(!message.member.roles.cache.find(role=>role.name===`Puzzle Moderator`)) return;
-  if(message.content.startsWith(`+set`)||message.content.startsWith(`-set`))
+  if(message.content.startsWith(`+set`))
   {
     let splitmessage = message.content.split(` `);
     splitmessage.splice(0,1);
@@ -195,7 +195,12 @@ client.on("message",async function(message){
       message.lineReply(`User not in server`)
     }
   }
-  if(message.content.startsWith(`+del`)||message.content.startsWith(`-set`))
+  if(message.content.startsWith(`+del`) && !(message.member.hasPermission("ADMINISTRATOR")))
+  {
+	  message.lineReply("You are missing `administrator` perms to run this command.");
+  }
+  
+  if(message.content.startsWith(`+del`) && message.member.hasPermission("ADMINISTRATOR"))
   {
     let splitmessage = message.content.split(` `);
     let userid11 = splitmessage[1];
@@ -333,21 +338,13 @@ client.on("message",async function(message){
 
 
   }
-  if(message.content === `-r0`)
-  {
-    const emb = new Discord.MessageEmbed()
-    .setColor(`#0f0f0f`)
-    .setThumbnail('https://cdn.discordapp.com/attachments/810186492172435456/849649459150848061/Staff.png')
-    .setAuthor(`Server Rule 0`)
-    .setDescription(`**Follow [Discord Terms of Service](https:\/\/discord.com\/terms)** <:Staff:849153294546501642>\n\n__Do not__ joke about being underage in the server. Our mods don't have time to try and understand your 'sarcasm'. Any attempt of joking about your or other members' being underage will result in a hardmute.`)
-    message.channel.send(emb)
-  }
+  
 })
 client.on("message",async function(message){
   if(message.author.bot) return;
   if(message.guild === null) return;
-  if(message.author.id != `484692654731427843` &&message.author.id != `743672901680627764`) return;
-  if(message.content.startsWith(`+lvlset`)||message.content.startsWith(`-lvlset`))
+  if(!message.member.hasPermission("ADMINISTRATOR")) return;
+  if(message.content.startsWith(`+lvlset`))
   {
     let splitmessage = message.content.split(` `);
     splitmessage.splice(0,1);
@@ -397,7 +394,7 @@ client.on("message",async function(message){
 
     }
   }
-  if(message.content.startsWith(`+lvldel`)||message.content.startsWith(`-lvldel`))
+  if(message.content.startsWith(`+lvldel`))
   {
     let splitmessage = message.content.split(` `);
     splitmessage.splice(0,1);
@@ -432,7 +429,7 @@ client.on("message",async function(message){
     }
 
   }
-  if(message.content === `+lvlans`||message.content === `-lvlans`)
+  if(message.content === `+lvlans`)
   {
 
     str = ``;
