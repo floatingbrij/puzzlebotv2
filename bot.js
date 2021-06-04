@@ -464,15 +464,14 @@ client.on("message",async function(message){
 
 })
 
-client.on(`message,async function(message){ 
+client.on(`message`,async function(message){ 
   if(message.author.bot) return;
   if(message.guild === null) return;
 	
   if(message.content === `+help` && message.members.roles.cache.has(`845971016341782548`))
   {
     str = "1. `+dm <userid/mention> message` - Obviously to dm someone =)\n2. `+help` - You're looking at it."
-    
-    
+       
     const dbhelp = new Discord.MessageEmbed()
       .setColor(`#0f0f0f`)
       .setTitle(`Mod commands:`)
