@@ -294,7 +294,7 @@ client.on("message",async function(message){
   {
     message.lineReply('thankyou  🥰')
   }
-  if(message.content.startsWith(`-dm`))
+  if(message.content.startsWith(`-dm`)||message.content.startsWith(`+dm`))
   {
     splitmessage=message.content.split(` `);
     splitmessage.splice(0,1);
