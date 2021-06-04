@@ -121,7 +121,7 @@ client.on("message",async function(message){
   if(message.author.bot) return;
   if(message.guild === null) return;
   if(!message.member.roles.cache.find(role=>role.name===`Puzzle Moderator`)) return;
-  if(message.content.startsWith(`+set`))
+  if(message.content.startsWith(`+set`)||message.content.startsWith(`-set`))
   {
     let splitmessage = message.content.split(` `);
     splitmessage.splice(0,1);
@@ -195,7 +195,7 @@ client.on("message",async function(message){
       message.lineReply(`User not in server`)
     }
   }
-  if(message.content.startsWith(`+del`))
+  if(message.content.startsWith(`+del`)||message.content.startsWith(`-set`))
   {
     let splitmessage = message.content.split(` `);
     let userid11 = splitmessage[1];
@@ -240,9 +240,9 @@ client.on("message",async function(message){
   }
   if(message.content === `+help`)
   {
-    str = "1. `+set <userid/usermention> <lvlnumber>` - Works for both updating person's level & also to make new entry in db\n2. `+del <userid/usermention>` - Deletes user from db and removes their role.\n3.`-dm <userid/mention> message` - Obviously to dm someone =)";
+    str = "1. `-set <userid/usermention> <lvlnumber>` - Works for both updating person's level & also to make new entry in db\n2. `-del <userid/usermention>` - Deletes user from db and removes their role.\n3.`-dm <userid/mention> message` - Obviously to dm someone =)";
     if(message.member.id === `484692654731427843` || message.member.id === `743672901680627764`)
-    str = str + "\n4. `+lvlset [#lvl] [answer]` - to set levels(both update & create)\n5. `+lvldel [#lvl]` - to delete levels \n6. `+lvlans` - to see levels & answers in db"
+    str = str + "\n4. `-lvlset [#lvl] [answer]` - to set levels(both update & create)\n5. `-lvldel [#lvl]` - to delete levels \n6. `-lvlans` - to see levels & answers in db"
     const dbhelp = new Discord.MessageEmbed()
       .setColor(`#0f0f0f`)
       .setTitle(`Mod commands:`)
@@ -347,7 +347,7 @@ client.on("message",async function(message){
   if(message.author.bot) return;
   if(message.guild === null) return;
   if(message.author.id != `484692654731427843` &&message.author.id != `743672901680627764`) return;
-  if(message.content.startsWith(`+lvlset`))
+  if(message.content.startsWith(`+lvlset`)||message.content.startsWith(`-lvlset`))
   {
     let splitmessage = message.content.split(` `);
     splitmessage.splice(0,1);
@@ -397,7 +397,7 @@ client.on("message",async function(message){
 
     }
   }
-  if(message.content.startsWith(`+lvldel`))
+  if(message.content.startsWith(`+lvldel`)||message.content.startsWith(`-lvldel`))
   {
     let splitmessage = message.content.split(` `);
     splitmessage.splice(0,1);
@@ -432,7 +432,7 @@ client.on("message",async function(message){
     }
 
   }
-  if(message.content === `+lvlans`)
+  if(message.content === `+lvlans`||message.content === `-lvlans`)
   {
 
     str = ``;
