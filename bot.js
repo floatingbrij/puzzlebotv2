@@ -141,7 +141,7 @@ client.on("message",async function(message){
     lvl = splitmessage[1];
     lvlnum = Number(lvl)
     if(message.guild.members.cache.get(userid11).user.bot){
-      message.lineReply(`You can't dm bots.`);
+      message.lineReply(`You can't add bots to the db.`);
       return;
     }
     if(client.guilds.cache.get(`777607607019110479`).members.cache.has(userid11))
@@ -245,7 +245,8 @@ client.on("message",async function(message){
   }
   if(message.content === `+help`)
   {
-    str = "1. `+set <userid/usermention> <lvlnumber>` - Works for both updating person's level & also to make new entry in db\n2. `+del <userid/usermention>` - Deletes user from db and removes their role.(Admin only)\n3.`+dm <userid/mention> message` - Obviously to dm someone =)";
+    str = "1. `+set <userid/usermention> <lvlnumber>` - Works for both updating person's level & also to make new entry in db\n2. `+del <userid/usermention>` - Deletes user from db and removes their role.(Admin only)\n3.`
+	  <userid/mention> message` - Obviously to dm someone =)";
     if(message.member.id === `484692654731427843` || message.member.id === `743672901680627764`)
     str = str + "\n4. `+lvlset [#lvl] [answer]` - to set levels(both update & create)\n5. `+lvldel [#lvl]` - to delete levels \n6. `+lvlans` - to see levels & answers in db"
     const dbhelp = new Discord.MessageEmbed()
@@ -299,7 +300,7 @@ client.on("message",async function(message){
   {
     message.lineReply('thankyou  🥰')
   }
-  if(message.content.startsWith(`-dm`)||message.content.startsWith(`+dm`))
+  if(message.content.startsWith(`+dm`))
   {
     splitmessage=message.content.split(` `);
     splitmessage.splice(0,1);
