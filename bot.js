@@ -504,7 +504,7 @@ client.on("message",async function(message){
   {
     str = ``;
     
-    profileall = await profilem.find({}).sort({lvl: -1}).limit(10);
+    profileall = await profilem.find({}).sort({level: -1}).limit(10);
     for(x in profileall)
     {
       lvl1 = 1+Number(x);
