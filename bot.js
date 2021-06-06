@@ -528,7 +528,7 @@ client.on("message",async function(message){
       message.lineReply(lvl1)
     }
   }
-  }
+  
 })
 	  
 client.login(`ODMyMjA0MjY5NDM1NzQ4MzUz.YHgYnw.MwMi-8Rq9D3QbgkcmLQ_TWc8iUY`)
