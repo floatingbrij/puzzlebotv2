@@ -503,8 +503,14 @@ client.on("message",async function(message){
   if(message.content.startsWith(`+lb`))
   {
     str = ``;
-    
-    profileall = await profilem.find({}).sort({level: -1}).limit(10);
+    let splitmessage = message.content.split(` `);
+    num = 5;
+    numcheck = parseInt(splitmessage[1]);
+    if(numcheck>0 && numcheck<21)
+    {
+	    num = numcheck;
+    }
+    profileall = await profilem.find({}).sort({level: -1}).limit(num);
     for(x in profileall)
     {
       lvl1 = 1+Number(x);
