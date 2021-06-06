@@ -499,7 +499,7 @@ client.on("message",async function(message){
   if(message.author.bot) return;
   if(message.guild === null) return;
 	
-  if(!message.member.roles.cache.find(role=>role.name===`Puzzle Moderator`) && !message.member.hasPermission("ADMINISTRATOR") return;
+  if(!message.member.roles.cache.find(role=>role.name===`Puzzle Moderator`) && !message.member.hasPermission("ADMINISTRATOR")) return;
   if(message.content.startsWith(`+lb`))
   {
     str = ``;
