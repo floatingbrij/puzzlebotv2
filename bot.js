@@ -23,6 +23,7 @@ mongoose.connect(mongodb_srv,
     });
 const profilem = require("./models/dbschema.js");
 const lvlmap = require("./models/dblvl.js");
+const { profile } = require("console");
 
 client.on("message",async function(message)
 {
@@ -494,4 +495,40 @@ client.on(`message`,async function(message){
     } 
   }
 })
+client.on("message",async function(message){
+  if(message.author.bot) return;
+  if(message.guild === null) return;
+	
+  if(!message.member.roles.cache.find(role=>role.name===`Puzzle Moderator`) && !message.member.hasPermission("ADMINISTRATOR") return;
+  if(message.content.startsWith(`+lb`))
+  {
+    str = ``;
+    
+    profileall = await profilem.find({}).sort({lvl: -1}).limit(10);
+    for(x in profileall)
+    {
+      lvl1 = 1+Number(x);
+      if(profileall[x].level>15)
+      {
+        str = str+ `\n${lvl1}. <@${profileall[x].userid}> has finished the puzzle!`;
+      }
+      else{
+      str = str+ `\n${lvl1}. <@${profileall[x].userid}> is on level ${profileall[x].level}`;
+      }
+    }
+    if(str === ``)
+    {
+      message.lineReply(`Error with db`);
+    }
+    else{
+      const lvl1 = new Discord.MessageEmbed()
+        .setColor(`#0f0f0f`)
+        .setTitle(`Leaderboard(top 10):`)
+        .setDescription(str)
+      message.lineReply(lvl1)
+    }
+  }
+  }
+})
+	  
 client.login(`ODMyMjA0MjY5NDM1NzQ4MzUz.YHgYnw.MwMi-8Rq9D3QbgkcmLQ_TWc8iUY`)
