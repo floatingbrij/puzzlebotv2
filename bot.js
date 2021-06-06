@@ -529,7 +529,7 @@ client.on("message",async function(message){
     else{
       const lvl1 = new Discord.MessageEmbed()
         .setColor(`#0f0f0f`)
-        .setTitle(`Leaderboard(top 10):`)
+        .setTitle(`Leaderboard(top ${num}):`)
         .setDescription(str)
       message.lineReply(lvl1)
     }
