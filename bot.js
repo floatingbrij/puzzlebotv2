@@ -74,7 +74,7 @@ client.on("message",async function(message)
     const levelembed = new Discord.MessageEmbed()
       .setColor(`#0f0f0f`)
       .setTitle(`You're in level ${userdata.level}`)
-      .setDescription(`[Level ${userdata.level} link](https://discord.com/channels/777607607019110479/${lvlinfo[userdata.level]})`)
+      .setDescription(`[Level ${userdata.level} link](https://discord.com/channels/777607607019110479/${userdata.levelid})`)
     message.author.send(levelembed);
   }
   else if(message.content === anstothislevel)
