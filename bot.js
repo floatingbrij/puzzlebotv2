@@ -59,7 +59,7 @@ client.on("message",async function(message)
     const succ = new Discord.MessageEmbed()
       .setColor('#0099ff')
       .setTitle(`Hello Puzzler!`)
-      .setDescription(`Welcome to the first level of The Puzzle!\nGo ahead to [Level 0](https://discord.com/channels/777607607019110479/${lvlinfo[0]})  and start solving!\n\n**Upon solving, dm me the answer to level up!**`)
+      .setDescription(`Welcome to the first level of The Puzzle!\nGo ahead to [Level 0](https://discord.com/channels/777607607019110479/829399994384777228)  and start solving!\n\n**Upon solving, dm me the answer to level up!**`)
       .setThumbnail(`https://i.ibb.co/8K1qyMy/a-a5f0cb79db926271b88ce50524dd4319-1.gif`)
     message.author.send(succ);
 
@@ -92,11 +92,13 @@ client.on("message",async function(message)
     {
       message.author.send(`Congratulations! You have completed the Puzzel!`)
     }
+	  
     else {
+      const lvl1 = await lvlmap.findOne({lvl: levelplus});
       const help = new Discord.MessageEmbed()
         .setColor('#0099ff')
         .setTitle(`Congratulations! you have successfully solved level ${levelplus-1}!`)
-        .setDescription(`Next level: [Level ${levelplus}](https://discord.com/channels/777607607019110479/${lvlinfo[levelplus]})`)
+        .setDescription(`Next level: [Level ${levelplus}](https://discord.com/channels/777607607019110479/${lvl1.lvlid})`)
       message.author.send(help);
       removerole = client.guilds.cache.get(`777607607019110479`).roles.cache.find(role=>role.name === `Level ${levelplus-1}`);
       addrole = client.guilds.cache.get(`777607607019110479`).roles.cache.find(role=>role.name === `Level ${levelplus}`);
