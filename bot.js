@@ -50,8 +50,9 @@ client.on("message",async function(message)
 	const succ = new Discord.MessageEmbed()
 		.setColor('#0099ff')
 		.setTitle(`Hello Puzzler!`)
-		.setDescription(`The Puzzle event will be starting on June 29th!`)
+		.setDescription(`Welcome to the Puzzle event <@${message.author.id}>! The event will be starting on 29th June!`)
 		.setThumbnail(`https://i.ibb.co/8K1qyMy/a-a5f0cb79db926271b88ce50524dd4319-1.gif`)
+		.setFooter(`Stay in the server for more updates!`)
 	message.author.send(succ)
 	return;
      /**
