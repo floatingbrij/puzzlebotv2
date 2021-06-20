@@ -46,7 +46,7 @@ client.on("message",async function(message)
     console.log(anstothislevel)
   }
   if(!userdata)
-  { 	if (talkedRecently.has(msg.author.id)) {
+  { 	if (talkedRecently.has(message.author.id)) {
             return;
     	} else {
 		const succ = new Discord.MessageEmbed()
@@ -56,10 +56,10 @@ client.on("message",async function(message)
 		.setThumbnail(`https://i.ibb.co/8K1qyMy/a-a5f0cb79db926271b88ce50524dd4319-1.gif`)
 		.setFooter(`Stay in the server for more updates!`)
 	message.author.send(succ)
-        talkedRecently.add(msg.author.id);
+        talkedRecently.add(message.author.id);
         setTimeout(() => {
           // Removes the user from the set after a minute
-          talkedRecently.delete(msg.author.id);
+          talkedRecently.delete(message.author.id);
         }, 600000);
     }
 	
