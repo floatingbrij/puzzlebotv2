@@ -46,7 +46,15 @@ client.on("message",async function(message)
     console.log(anstothislevel)
   }
   if(!userdata)
-  {
+  { 
+	const succ = new Discord.MessageEmbed()
+		.setColor('#0099ff')
+		.setTitle(`Hello Puzzler!`)
+		.setDescription(`The Puzzle event will be starting on June 29th!`)
+		.setThumbnail(`https://i.ibb.co/8K1qyMy/a-a5f0cb79db926271b88ce50524dd4319-1.gif`)
+	message.author.send(succ)
+	return;
+     /**
     let newuser = await profilem.create({
       userid: message.author.id,
       level: 0
@@ -68,6 +76,7 @@ client.on("message",async function(message)
       .setAuthor(`${message.author.tag}`,message.author.displayAvatarURL({ dynamic: true, size: 256 }))
       .setDescription(`<@${message.author.id}> has joined the puzzle!`)
     client.guilds.cache.get(`777607607019110479`).channels.cache.get('832476253284991006').send(lvllog);
+    **/
   }
   else if(message.content === `+level`)
   {
