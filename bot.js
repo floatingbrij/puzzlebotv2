@@ -24,7 +24,7 @@ mongoose.connect(mongodb_srv,
 const profilem = require("./models/dbschema.js");
 const lvlmap = require("./models/dblvl.js");
 const { profile } = require("console");
-
+const talkedRecently = new Set();
 client.on("message",async function(message)
 {
   if(message.author.bot) return;
@@ -46,14 +46,23 @@ client.on("message",async function(message)
     console.log(anstothislevel)
   }
   if(!userdata)
-  { 
-	const succ = new Discord.MessageEmbed()
+  { 	if (talkedRecently.has(msg.author.id)) {
+            return;
+    	} else {
+		const succ = new Discord.MessageEmbed()
 		.setColor('#0099ff')
 		.setTitle(`Hello Puzzler!`)
 		.setDescription(`Welcome to the Puzzle event <@${message.author.id}>! The event will be starting on 29th June!`)
 		.setThumbnail(`https://i.ibb.co/8K1qyMy/a-a5f0cb79db926271b88ce50524dd4319-1.gif`)
 		.setFooter(`Stay in the server for more updates!`)
 	message.author.send(succ)
+        talkedRecently.add(msg.author.id);
+        setTimeout(() => {
+          // Removes the user from the set after a minute
+          talkedRecently.delete(msg.author.id);
+        }, 600000);
+    }
+	
 	return;
      /**
     let newuser = await profilem.create({
