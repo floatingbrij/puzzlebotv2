@@ -439,7 +439,7 @@ client.on("message",async function(message)
       .setTitle(`Gold Rush Q & Ans`)
     for(x in hmm)
     {
-      embeddd.addField(`\n${hmm[x].lvl} ${hmm[x].lvlq}`,`||${hmm[x].lvlans}||`)
+      embeddd.addField(`\n${hmm[x].lvl}. ${hmm[x].lvlq}`,`||${hmm[x].lvlans}||`)
     }
     message.lineReply(embeddd)
   }
