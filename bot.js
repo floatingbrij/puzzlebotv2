@@ -404,7 +404,7 @@ client.on("message",async function(message)
       let users = message.guild.roles.cache.get(`856350943092015114`).members.map(m=>m.user.id);
       for(x in users)
       {
-        message.guild.members.cache.get(users[id]).send(`GOLD RUSH TIME!!!!! YOU HAVE 30 SECONDS TO ANSWER THIS QUESTION:\n ${anscheck.lvlq}`);
+        message.guild.members.cache.get(users[x]).send(`GOLD RUSH TIME!!!!! YOU HAVE 30 SECONDS TO ANSWER THIS QUESTION:\n ${anscheck.lvlq}`);
       }
     }
     setTimeout(()=>{
