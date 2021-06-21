@@ -111,7 +111,7 @@ client.on("message",async function(message)
       check1 = false;
       client.guilds.cache.get(`777607607019110479`).channels.cache.get(`832476253284991006`).send(`<@${message.author.id}> has won gold rush ${answer.lvl}`)
       //need to message everyone else
-      let users = message.guild.roles.cache.get(`856350943092015114`).members.map(m=>m.user.id);
+      let users = client.guilds.cache.get(`777607607019110479`).roles.cache.get(`856350943092015114`).members.map(m=>m.user.id);
       for(x in users)
       {
         if(users[x]!=message.author.id){
@@ -434,7 +434,7 @@ client.on("message",async function(message)
   {
     hmm = await gldb.find({}).sort({lvl: 1});
 
-    const embeddd = Discord.MessageEmbed()
+    const embeddd =new Discord.MessageEmbed()
       .setColor(`#0f0f0f`)
       .setTitle(`Gold Rush Q & Ans`)
     for(x in hmm)
