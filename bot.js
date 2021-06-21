@@ -432,6 +432,21 @@ client.on("message",async function(message)
       }
     },30000)
   }
+  if(message.content.startsWith(`+gldelete`))
+  {
+    splitmessage = message.content.split(` `);
+    hmm = await gldb.findOne({lvl:splitmessage[1]})
+    if(!hmm)
+    {
+      message.lineReply(`No such question.`)
+      return;
+    }
+    else {
+      gldb.findOneAndDelete({lvl:splitmessage[1]}).then(()=>{
+        message.lineReply(`Gl level deleted.`)
+      }).catch(console.log)
+    }
+  }
   if(message.content.startsWith(`+glview`))
   {
     hmm = await gldb.find({}).sort({lvl: 1});
