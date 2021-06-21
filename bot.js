@@ -104,7 +104,7 @@ client.on("message",async function(message)
   {
     if(check2 === 0) return;
     ques = check2;
-    cost answer = await gldb.findOne({lvl:ques});
+    const answer = await gldb.findOne({lvl:ques});
     if(message.content === answer.lvlans)
     {
       message.author.send(`Congratulations! You have won this round of Gold Rush!`)
