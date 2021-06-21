@@ -396,7 +396,30 @@ client.on("message",async function(message)
   if(message.author.bot) return;
   if(message.guild === null) return;
   if(!message.member.hasPermission("ADMINISTRATOR")) return;
+  if(message.content.startsWith(`+h`))
+  {
+    let splitMessage = message.content.split(` `);
+      splitMessage.splice(0,1);
+      if(splitMessage=== null)
+      {
 
+      }
+      else
+      {
+        if(message.reference != null)
+        {
+          replymsg = message.reference.messageID;
+
+          hmm =await message.channel.messages.fetch(replymsg);
+
+          await hmm.lineReply(splitMessage.join(" "));
+          message.delete()
+          return;
+        }
+        message.channel.send(splitMessage.join(" "));
+        message.delete();
+      }
+  }
   if(message.content.startsWith(`+br`))
   {
     splitmessage = message.content.split(` `)
