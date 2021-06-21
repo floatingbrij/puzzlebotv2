@@ -26,8 +26,8 @@ const lvlmap = require("./models/dblvl.js");
 const gldb = require("./models/goldrush.js");
 const { profile } = require("console");
 const talkedRecently = new Set();
-const check1 = false;
-const check2 = 0;
+var check1 = false;
+var check2 = 0;
 client.on("message",async function(message)
 {
   if(message.author.bot) return;
