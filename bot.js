@@ -428,6 +428,7 @@ client.on("message",async function(message)
         {
           message.guild.members.cache.get(users[x]).send(`Gold rush has ended! No one won lmao!`);
         }
+        message.lineReply(`Gold rush has ended, check <#832476253284991006> to see if someone won!`)
       }
     },30000)
   }
