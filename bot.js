@@ -382,12 +382,13 @@ client.on("message",async function(message){
   }
 
 })
-client.on("message",async function(message){
+client.on("message",async function(message)
+{
   if(message.author.bot) return;
   if(message.guild === null) return;
   if(!message.member.hasPermission("ADMINISTRATOR")) return;
 
-  if(message.content.startsWith(`+br`)
+  if(message.content.startsWith(`+br`))
   {
     splitmessage = message.content.split(` `)
     check2 = Number(splitmessage[1]);
