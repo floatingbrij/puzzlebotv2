@@ -450,7 +450,7 @@ client.on("message",async function(message)
         lvl: gllevelnum
       })
         newgllvl.save().then(()=>{
-        message.lineReply("Set Gold rush level "+gllevelnum+"\nQ:`"+glques+"`nAns:`"+glans:+"`")
+        message.lineReply("Set Gold rush level "+gllevelnum+"\nQ:`"+glques+"`nAns:`"+glans+":`")
       })
     }
     else{
