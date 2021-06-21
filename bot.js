@@ -422,6 +422,7 @@ client.on("message",async function(message)
   }
   if(message.content.startsWith(`+glset`))
   {
+
     splitmessage = message.content.split(` `)
 
     splitquesans = message.content.split(/[""]/)
@@ -465,7 +466,7 @@ client.on("message",async function(message)
         },
       }
     ).then(()=>{
-      message.lineReply("Gold rush level "+gllevelnum+" updated.\nQ:`"+glques+"`nAns:`"+glans:+"`")
+      message.lineReply("Gold rush level "+gllevelnum+" updated.\nQ:`"+glques+"`nAns:`"+glans+":`")
     })
 
     }
