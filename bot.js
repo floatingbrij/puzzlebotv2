@@ -430,10 +430,10 @@ client.on("message",async function(message)
     {
       if(splitquesans[x]===` `||splitquesans[x]===``)
       {
-        splitquesans.split(x,1);
+        splitquesans.splice(x,1);
       }
     }
-    splitquesans.split(0,1);
+    splitquesans.splice(0,1);
     if(splitquesans.length !=2)
     {
       message.lineReply(`Give both level and answer.`)
