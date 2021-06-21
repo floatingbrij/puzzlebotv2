@@ -115,7 +115,7 @@ client.on("message",async function(message)
       for(x in users)
       {
         if(users[x]!=message.author.id){
-          message.guild.members.cache.get(users[x]).send(`Someone else has already finished it! too late!`);
+          client.guilds.cache.get(`777607607019110479`).members.cache.get(users[x]).send(`Someone else has already finished it! too late!`);
       }
       }
 
@@ -414,7 +414,8 @@ client.on("message",async function(message)
       let users = message.guild.roles.cache.get(`856350943092015114`).members.map(m=>m.user.id);
       for(x in users)
       {
-        message.guild.members.cache.get(users[x]).send(`GOLD RUSH TIME!!!!! YOU HAVE 30 SECONDS TO ANSWER THIS QUESTION:\n\nQ: ${anscheck.lvlq}`);
+        message.guild.members.cache.get(users[x]).send(`GOLD RUSH TIME!!!!! YOU HAVE 30 SECONDS TO ANSWER THIS QUESTION:\n\nQ:`);
+        message.guild.members.cache.get(users[x]).send(`${anscheck.lvlq}`)
       }
     }
     setTimeout(()=>{
