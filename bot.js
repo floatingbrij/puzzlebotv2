@@ -401,7 +401,7 @@ client.on("message",async function(message)
     }
     else {
       check1 = true;
-      let users = message.guild.roles.cache.find(`856350943092015114`).members.map(m=>m.user.id);
+      let users = message.guild.roles.cache.get(`856350943092015114`).members.map(m=>m.user.id);
       for(x in users)
       {
         message.guild.members.cache.get(users[id]).send(`GOLD RUSH TIME!!!!! YOU HAVE 30 SECONDS TO ANSWER THIS QUESTION:\n ${anscheck.lvlq}`);
@@ -412,7 +412,7 @@ client.on("message",async function(message)
       {
         check1 = false;
         check2 = 0;
-        let users = message.guild.roles.cache.find(`856350943092015114`).members.map(m=>m.user.id);
+        let users = message.guild.roles.cache.get(`856350943092015114`).members.map(m=>m.user.id);
         for(x in users)
         {
           message.guild.members.cache.get(users[id]).send(`Gold rush has ended! No one won lmao!`);
@@ -451,7 +451,7 @@ client.on("message",async function(message)
         lvl: gllevelnum
       })
         newgllvl.save().then(()=>{
-        message.lineReply("Set Gold rush level "+gllevelnum+"\nQ:`"+glques+"`nAns:`"+glans+":`")
+        message.lineReply("Set Gold rush level "+gllevelnum+"\nQ:`"+glques+"`\nAns:`"+glans+"`")
       })
     }
     else{
@@ -466,7 +466,7 @@ client.on("message",async function(message)
         },
       }
     ).then(()=>{
-      message.lineReply("Gold rush level "+gllevelnum+" updated.\nQ:`"+glques+"`nAns:`"+glans+":`")
+      message.lineReply("Gold rush level "+gllevelnum+" updated.\nQ:`"+glques+"`\nAns:`"+glans+"`")
     })
 
     }
