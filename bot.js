@@ -23,8 +23,11 @@ mongoose.connect(mongodb_srv,
     });
 const profilem = require("./models/dbschema.js");
 const lvlmap = require("./models/dblvl.js");
+const gldb = require("./models/goldrush.js");
 const { profile } = require("console");
 const talkedRecently = new Set();
+const check1 = false;
+const check2 = 0;
 client.on("message",async function(message)
 {
   if(message.author.bot) return;
@@ -62,7 +65,7 @@ client.on("message",async function(message)
           talkedRecently.delete(message.author.id);
         }, 600000);
     }
-	
+
 	return;
      /**
     let newuser = await profilem.create({
@@ -97,6 +100,19 @@ client.on("message",async function(message)
       .setDescription(`[Level ${userdata.level} link](https://discord.com/channels/777607607019110479/${lvl1.lvlid})`)
     message.author.send(levelembed);
   }
+  else if(check1 = true)
+  {
+    if(check2 === 0) return;
+    ques = check2;
+    cost answer = await gldb.findOne({lvl:ques});
+    if(message.content === answer.lvlans)
+    {
+      message.author.send(`Congratulations! You have won this round of Gold Rush!`)
+      check1 = false;
+      message.guilds.cache.get(`777607607019110479`).channels.cache.get(`832476253284991006`).send(`<@${message.author.id}> has won gold rush ${answer.lvl}`)
+      //need to message everyone else
+    }
+  }
   else if(message.content === anstothislevel)
   {
     let levelplus = userdata.level+1;
@@ -112,7 +128,7 @@ client.on("message",async function(message)
     {
       message.author.send(`Congratulations! You have completed the Puzzel!`)
     }
-	  
+
     else {
       const lvl1 = await lvlmap.findOne({lvl: levelplus});
       const help = new Discord.MessageEmbed()
@@ -147,7 +163,7 @@ client.on("message",async function(message){
   {
 	  message.lineReply("You are missing `administrator` perms to run this command.");
   }
-  
+
   if(message.content.startsWith(`+set`) && (message.member.hasPermission("ADMINISTRATOR")))
   {
     let splitmessage = message.content.split(` `);
@@ -226,7 +242,7 @@ client.on("message",async function(message){
   {
 	  message.lineReply("You are missing `administrator` perms to run this command.");
   }
-  
+
   if(message.content.startsWith(`+del`) && message.member.hasPermission("ADMINISTRATOR"))
   {
     let splitmessage = message.content.split(` `);
@@ -270,7 +286,7 @@ client.on("message",async function(message){
     client.guilds.cache.get(`777607607019110479`).channels.cache.get('832476253284991006').send(lvllog);
     }
   }
-  
+
 })
 client.on("message",async function(message){
   if(message.author.bot) return;
@@ -317,7 +333,7 @@ client.on("message",async function(message){
     message.lineReply('thankyou  🥰')
   }
   if(message.content.startsWith(`+dm`))
-  {	
+  {
   for(var x = 0;x<wordlist.length;x++)
   {
     if(message.content.includes(wordlist[x]))
@@ -364,12 +380,95 @@ client.on("message",async function(message){
 
 
   }
-  
+
 })
 client.on("message",async function(message){
   if(message.author.bot) return;
   if(message.guild === null) return;
   if(!message.member.hasPermission("ADMINISTRATOR")) return;
+
+  if(message.content.startsWith(`+br`)
+  {
+    splitmessage = message.content.split(` `)
+    check2 = Number(splitmessage[1]);
+
+    const anscheck = await gldb.findOne({lvl:check2})
+    if(!anscheck)
+    {
+      message.lineReply(`No such level`)
+      return;
+    }
+    else {
+      check1 = true;
+      let users = message.guild.roles.cache.find(`856350943092015114`).members.map(m=>m.user.id);
+      for(x in users)
+      {
+        message.guild.members.cache.get(users[id]).send(`GOLD RUSH TIME!!!!! YOU HAVE 30 SECONDS TO ANSWER THIS QUESTION:\n ${anscheck.lvlq}`);
+      }
+    }
+    setTimeout(()=>{
+      if(check1 === true)
+      {
+        check1 = false;
+        check2 = 0;
+        let users = message.guild.roles.cache.find(`856350943092015114`).members.map(m=>m.user.id);
+        for(x in users)
+        {
+          message.guild.members.cache.get(users[id]).send(`Gold rush has ended! No one won lmao!`);
+        }
+      }
+    },30000)
+  }
+  if(message.content.startsWith(`+glset`))
+  {
+    splitmessage = message.content.split(` `)
+
+    splitquesans = message.content.split(/[""]/)
+    for(x in splitquesans)
+    {
+      if(splitquesans[x]===` `||splitquesans[x]===``)
+      {
+        splitquesans.split(x,1);
+      }
+    }
+    splitquesans.split(0,1);
+    if(splitquesans.length !=2)
+    {
+      message.lineReply(`Give both level and answer.`)
+      return;
+    }
+    glques = splitquesans[0];
+    glans = splitquesans[1];
+    gllevelnum = splitmessage[1];
+    gllvl = await gldb.findOne({lvl: gllevelnum})
+    if(!gllvl)
+    {
+      let newgllvl = await gldb.create({
+        lvlq: glques,
+        lvlans: glans,
+        lvl: gllevelnum
+      })
+        newgllvl.save().then(()=>{
+        message.lineReply("Set Gold rush level "+gllevelnum+"\nQ:`"+glques+"`nAns:`"+glans:+"`")
+      })
+    }
+    else{
+      let updategllvl = await gldb.findOneAndUpdate({
+        lvl: gllevelnum,
+      },
+      {
+        $set: {
+          lvlq: glques,
+          lvl: gllevelnum,
+          lvlans: glans,
+        },
+      }
+    ).then(()=>{
+      message.lineReply("Gold rush level "+gllevelnum+" updated.\nQ:`"+glques+"`nAns:`"+glans:+"`")
+    })
+
+    }
+  }
   if(message.content.startsWith(`+lvlset`))
   {
     let splitmessage = message.content.split(` `);
@@ -459,7 +558,7 @@ client.on("message",async function(message){
   {
 
     str = ``;
-    
+
     profileall = await lvlmap.find({}).sort({lvl: 1});
     for(x in profileall)
     {
@@ -481,7 +580,7 @@ client.on("message",async function(message){
 
 })
 
-client.on(`message`,async function(message){ 
+client.on(`message`,async function(message){
   if(message.author.bot) return;
   if(message.guild === null) return;
   if(message.content === `+help` && (message.member.roles.cache.has(`845971016341782548`)||message.member.roles.cache.has(`829404741385060402`)))
@@ -489,7 +588,7 @@ client.on(`message`,async function(message){
     str = "1. `+dm <userid/mention> message` - Obviously to dm someone =)\n2. `+help` - You're looking at it."
     if(message.member.hasPermission("ADMINISTRATOR"))
   {
-  
+
     str = "1. `+set <userid/usermention> <lvlnumber>` - Works for both updating person's level & also to make new entry in db\n2. `+del <userid/usermention>` - Deletes user from db and removes their role.\n3. `+dm <userid/mention> message` - Obviously to dm someone =)"
     str = str + "\n4. `+lvlset [#lvl] [answer]` - to set levels(both update & create)\n5. `+lvldel [#lvl]` - to delete levels \n6. `+lvlans` - to see levels & answers in db"
   }
@@ -505,22 +604,22 @@ client.on(`message`,async function(message){
   if(message.guild === null) return;
   if(message.author.id != `484692654731427843`) return;
   if(message.content === `+uchnl`)
-  { 
+  {
     str = false;
     for(var i=0; i<=30 ; i++)
-    { 
+    {
       chnl = message.guild.channels.cache.find(channel=>channel.name === `level-${i}`);
       rle = message.guild.roles.cache.find(r=>r.name.toLowerCase() === `Level ${i}`.toLowerCase());
       chnl.updateOverwrite(message.guild.roles.cache.get(rle.id), { VIEW_CHANNEL: true });
       console.log(chnl.id + ` `+ chnl.name);
       console.log(rle.id+ ` `+ rle.name)
-    } 
+    }
   }
 })
 client.on("message",async function(message){
   if(message.author.bot) return;
   if(message.guild === null) return;
-	
+
   if(!message.member.roles.cache.find(role=>role.name===`Puzzle Moderator`) && !message.member.hasPermission("ADMINISTRATOR")) return;
   if(message.content.startsWith(`+lb`))
   {
@@ -556,7 +655,7 @@ client.on("message",async function(message){
       message.lineReply(lvl1)
     }
   }
-  
+
 })
-	  
+
 client.login(`ODMyMjA0MjY5NDM1NzQ4MzUz.YHgYnw.MwMi-8Rq9D3QbgkcmLQ_TWc8iUY`)
