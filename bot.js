@@ -109,8 +109,17 @@ client.on("message",async function(message)
     {
       message.author.send(`Congratulations! You have won this round of Gold Rush!`)
       check1 = false;
-      message.guilds.cache.get(`777607607019110479`).channels.cache.get(`832476253284991006`).send(`<@${message.author.id}> has won gold rush ${answer.lvl}`)
+      client.guilds.cache.get(`777607607019110479`).channels.cache.get(`832476253284991006`).send(`<@${message.author.id}> has won gold rush ${answer.lvl}`)
       //need to message everyone else
+      let users = message.guild.roles.cache.get(`856350943092015114`).members.map(m=>m.user.id);
+      for(x in users)
+      {
+        if(users[x]!=message.author.id){
+          message.guild.members.cache.get(users[x]).send(`Someone else has already finished it! too late!`);
+      }
+      }
+
+
     }
   }
   else if(message.content === anstothislevel)
@@ -401,10 +410,11 @@ client.on("message",async function(message)
     }
     else {
       check1 = true;
+      message.lineReply(`Gold rush has started with \nQ:\`${anscheck.lvlq}\`\nAns:\`${anscheck.lvlans}\``)
       let users = message.guild.roles.cache.get(`856350943092015114`).members.map(m=>m.user.id);
       for(x in users)
       {
-        message.guild.members.cache.get(users[x]).send(`GOLD RUSH TIME!!!!! YOU HAVE 30 SECONDS TO ANSWER THIS QUESTION:\n ${anscheck.lvlq}`);
+        message.guild.members.cache.get(users[x]).send(`GOLD RUSH TIME!!!!! YOU HAVE 30 SECONDS TO ANSWER THIS QUESTION:\n\nQ: ${anscheck.lvlq}`);
       }
     }
     setTimeout(()=>{
@@ -415,10 +425,23 @@ client.on("message",async function(message)
         let users = message.guild.roles.cache.get(`856350943092015114`).members.map(m=>m.user.id);
         for(x in users)
         {
-          message.guild.members.cache.get(users[id]).send(`Gold rush has ended! No one won lmao!`);
+          message.guild.members.cache.get(users[x]).send(`Gold rush has ended! No one won lmao!`);
         }
       }
     },30000)
+  }
+  if(message.content.startsWith(`+glview`))
+  {
+    hmm = await gldb.find({}).sort({lvl: 1});
+
+    const embeddd = Discord.MessageEmbed()
+      .setColor(`#0f0f0f`)
+      .setTitle(`Gold Rush Q & Ans`)
+    for(x in hmm)
+    {
+      embeddd.addField(`\n${hmm[x].lvl} ${hmm[x].lvlq}`,`||${hmm[x].lvlans}||`)
+    }
+    message.lineReply(embeddd)
   }
   if(message.content.startsWith(`+glset`))
   {
