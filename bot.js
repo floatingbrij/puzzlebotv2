@@ -418,7 +418,6 @@ client.on("message",async function(message)
   if(message.content.startsWith(`+smd`))
   {
       hmm = message.content.split(` `);
-      time = hmm[1];
       if(!hmm[1] || !isNaN(hmm[1]))
       {
           if(hmm[1]>60) return message.lineReply(`Too much time.`);
