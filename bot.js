@@ -127,6 +127,7 @@ client.on("message",async function(message)
   }
   if(message.content === anstothislevel)
   {
+    console.log(`Hi im here ${message.content}: ${anstothislevel}`)
     let levelplus = userdata.level+1;
     const profileup = await profilem.findOneAndUpdate({
       userid: message.author.id,
