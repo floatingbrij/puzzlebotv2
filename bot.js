@@ -103,7 +103,7 @@ client.on("message",async function(message)
       .setDescription(`[Level ${userdata.level} link](https://discord.com/channels/777607607019110479/${lvl1.lvlid})`)
     message.author.send(levelembed);
   }
-  if(check1 = true)
+  else if(check1 === true)
   {
     if(check2 === 0) return;
     ques = check2;
@@ -125,7 +125,7 @@ client.on("message",async function(message)
 
     }
   }
-  if(message.content === anstothislevel)
+  else if(message.content === anstothislevel)
   {
     console.log(`Hi im here ${message.content}: ${anstothislevel}`)
     let levelplus = userdata.level+1;
