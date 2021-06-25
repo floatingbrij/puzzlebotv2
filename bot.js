@@ -103,7 +103,7 @@ client.on("message",async function(message)
       .setDescription(`[Level ${userdata.level} link](https://discord.com/channels/777607607019110479/${lvl1.lvlid})`)
     message.author.send(levelembed);
   }
-  else if(check1 = true)
+  if(check1 = true)
   {
     if(check2 === 0) return;
     ques = check2;
@@ -125,7 +125,7 @@ client.on("message",async function(message)
 
     }
   }
-  else if(message.content === anstothislevel)
+  if(message.content === anstothislevel)
   {
     let levelplus = userdata.level+1;
     const profileup = await profilem.findOneAndUpdate({
@@ -418,13 +418,17 @@ client.on("message",async function(message)
   if(message.content.startsWith(`+smd`))
   {
       hmm = message.content.split(` `);
+    
       if(!hmm[1] || !isNaN(hmm[1]))
       {
           if(hmm[1]>60) return message.lineReply(`Too much time.`);
           if(hmm[1]<0) return message.lineReply(`Don't break me thx`);
-          cldown = 60000*Number(hmm[1]);
-          message.lineReply(`Cooldown set to ${hmm[1]} minutes`);
-       }
+          cldown = 60000*Number(hmm[1])
+          .then(()=>
+          {
+              message.lineReply(`Cooldown set to ${hmm[1]} minutes`);
+          })
+      }
   }
   if(message.content.startsWith(`+h`))
   {
@@ -568,6 +572,7 @@ client.on("message",async function(message)
   {
     let splitmessage = message.content.split(` `);
     splitmessage.splice(0,1);
+    if(splitmessage.length === 0) return message.lineReply(`Dude wtf`);
     levelid = splitmessage[0];
     lvlonlyid = levelid.replace(/\D/g,'');
     if(!message.guild.channels.cache.has(lvlonlyid)){
