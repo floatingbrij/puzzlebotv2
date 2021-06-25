@@ -28,7 +28,7 @@ const gldb = require("./models/goldrush.js");
 const { profile, time } = require("console");
 const talkedRecently = new Set();
 const dmdRecently = new Set();
-cldown = 600000;
+let cldown = 600000;
 var check1 = false;
 var check2 = 0;
 client.on("message",async function(message)
