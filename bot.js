@@ -2,6 +2,7 @@ const Discord = require("discord.js");
 require('discord-reply');
 const client = new Discord.Client();
 const mongoose = require('mongoose');
+cooldown = 
 client.on("ready", () => {
     client.user.setActivity("Puzzles! Dm to start!", { type: "PLAYING"})
     });
@@ -24,8 +25,10 @@ mongoose.connect(mongodb_srv,
 const profilem = require("./models/dbschema.js");
 const lvlmap = require("./models/dblvl.js");
 const gldb = require("./models/goldrush.js");
-const { profile } = require("console");
+const { profile, time } = require("console");
 const talkedRecently = new Set();
+const dmdRecently = new Set();
+cldown = 600000;
 var check1 = false;
 var check2 = 0;
 client.on("message",async function(message)
@@ -345,6 +348,13 @@ client.on("message",async function(message){
   {
   for(var x = 0;x<wordlist.length;x++)
   {
+    if ((dmdRecently.has(message.author.id))&&!(message.member.hasPermission("ADMINISTRATOR"))) {
+        message.lineReply(`Wait a while lol`)
+        .then(msg => {
+            setTimeout(() => msg.delete(), 10000)
+          })
+        return;
+    } 
     if(message.content.includes(wordlist[x]))
     {
     message.lineReply(`No bad words bud!`);
@@ -385,7 +395,16 @@ client.on("message",async function(message){
     }
     tagg = message.guild.members.cache.get(userid11).user.tag;
     idd = message.guild.members.cache.get(userid11).user.id;
-    message.guild.members.cache.get(userid11).send(msg).catch(()=>message.lineReply(`That user probably has dms **off**!!`)).then(()=>message.lineReply(`dm'd the given user(${tagg}: ${idd}).`))
+    message.guild.members.cache.get(userid11).send(msg).catch(()=>message.lineReply(`That user probably has dms **off**!!`))
+    .then(()=>message.lineReply(`dm'd the given user(${tagg}: ${idd}).`))
+    .then(()=>{
+        if(message.member.hasPermission("ADMINISTRATOR")) return;
+        dmdRecently.add(message.author.id);
+        setTimeout(() => {
+          // Removes the user from the set after a minute
+          dmdRecently.delete(message.author.id);
+        }, cldown);
+    })
 
 
   }
@@ -396,6 +415,21 @@ client.on("message",async function(message)
   if(message.author.bot) return;
   if(message.guild === null) return;
   if(!message.member.hasPermission("ADMINISTRATOR")) return;
+  if(message.content.startsWith(`+smd`))
+  {
+      hmm = message.content.split(` `);
+      time = hmm[1];
+      if(!hmm[1] || !isNaN(hmm[1]))
+      {
+          if(hmm[1]>60) return message.lineReply(`Too much time.`);
+          if(hmm[1]<0) return message.lineReply(`Don't break me thx`);
+          cldown = 60000*Number(hmm[1])
+          .then(()=>
+          {
+              message.lineReply(`Cooldown set to ${hmm[1]} minutes`);
+          })
+      }
+  }
   if(message.content.startsWith(`+h`))
   {
     let splitMessage = message.content.split(` `);
