@@ -422,12 +422,9 @@ client.on("message",async function(message)
       {
           if(hmm[1]>60) return message.lineReply(`Too much time.`);
           if(hmm[1]<0) return message.lineReply(`Don't break me thx`);
-          cldown = 60000*Number(hmm[1])
-          .then(()=>
-          {
-              message.lineReply(`Cooldown set to ${hmm[1]} minutes`);
-          })
-      }
+          cldown = 60000*Number(hmm[1]);
+          message.lineReply(`Cooldown set to ${hmm[1]} minutes`);
+       }
   }
   if(message.content.startsWith(`+h`))
   {
