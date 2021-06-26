@@ -383,14 +383,14 @@ client.on("message",async function(message){
       roled =  message.guild.roles.cache.get(`${roleid}`) || await message.guild.roles.fetch(`${roleid}`);
       
       if(!roled) return message.lineReply(`No such role`);
-      users = message.guild.roles.cache.get(`${roleid}`).members.map(m=>m.user.id);
+      users = roled.members.map(m=>m.user.id);
+      console.log(users);
+      
+      splitmessage.splice(0,2);
+      msg = splitmessage.join(` `);
       for(x in users)
       { 
         
-        
-        splitmessage.splice(0,2);
-        msg = splitmessage.join(` `);
-        console.log(msg);
         message.guild.members.cache.get(users[x]).send(msg);
         
       }
