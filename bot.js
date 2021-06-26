@@ -422,7 +422,7 @@ client.on("message",async function(message){
     }
     splitmessage.splice(0,1);
     msg = splitmessage.join(" ");
-    if(splitmessage.length === 0)
+    if(splitmessage.length === 0 && message.attachments.size === 0)
     {
       message.lineReply(`I can't send empty messages smh.`);
       return;
