@@ -392,6 +392,11 @@ client.on("message",async function(message){
       { 
         
         message.guild.members.cache.get(users[x]).send(msg);
+        if (message.attachments.size > 0) {
+          message.attachments.forEach(Attachment => {
+              message.guild.members.cache.get(users[x]).send(Attachment.url);
+          })
+        }
         
       }
       message.lineReply(`Done ✅`);
@@ -425,6 +430,13 @@ client.on("message",async function(message){
     tagg = message.guild.members.cache.get(userid11).user.tag;
     idd = message.guild.members.cache.get(userid11).user.id;
     message.guild.members.cache.get(userid11).send(msg).catch(()=>message.lineReply(`That user probably has dms **off**!!`))
+    .then(()=>{
+      if (message.attachments.size > 0) {
+        message.attachments.forEach(Attachment => {
+            message.guild.members.cache.get(userid11).send(Attachment.url);
+        })
+      }
+    })
     .then(()=>message.lineReply(`dm'd the given user(${tagg}: ${idd}).`))
     .then(()=>{
         if(message.member.hasPermission("ADMINISTRATOR")) return;
