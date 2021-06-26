@@ -372,6 +372,7 @@ client.on("message",async function(message){
    }
     splitmessage=message.content.split(` `);
     splitmessage.splice(0,1);
+    console.log(splitmessage);
     if(splitmessage.length === 0){
       message.lineReply(`Who da fuck do I dm buddy`)
       return;
@@ -380,18 +381,17 @@ client.on("message",async function(message){
     {
       roleid = splitmessage[1].match(/\d+/g);
       roled =  message.guild.roles.cache.get(`${roleid}`) || await message.guild.roles.fetch(`${roleid}`);
-     
+      
       if(!roled) return message.lineReply(`No such role`);
-      users = roled.members;
-	console.log(users);
+      users = message.guild.roles.cache.get(`${roleid}`).members.map(m=>m.user.id);
       for(x in users)
-      {
-	console.log(users[x]);
-	console.log(users[x].id);
-        usertodm = users[x].id;
-        splitmessage.splice(0,1);
+      { 
+        
+        
+        splitmessage.splice(0,2);
         msg = splitmessage.join(` `);
-        message.guild.members.cache.get(usertodm).send(msg);
+        console.log(msg);
+        message.guild.members.cache.get(users[x]).send(msg);
         
       }
       message.lineReply(`Done ✅`);
