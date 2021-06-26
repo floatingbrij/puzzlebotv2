@@ -380,11 +380,14 @@ client.on("message",async function(message){
     {
       roleid = splitmessage[1].match(/\d+/g);
       roled =  message.guild.roles.cache.get(`${roleid}`) || await message.guild.roles.fetch(`${roleid}`);
-      console.log(roled);
+     
       if(!roled) return message.lineReply(`No such role`);
       users = roled.members;
+	console.log(users);
       for(x in users)
       {
+	console.log(users[x]);
+	console.log(users[x].id);
         usertodm = users[x].id;
         splitmessage.splice(0,1);
         msg = splitmessage.join(` `);
