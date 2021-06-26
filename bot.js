@@ -101,6 +101,7 @@ client.on("message",async function(message)
       .setTitle(`You're in level ${userdata.level}`)
       .setDescription(`[Level ${userdata.level} link](https://discord.com/channels/777607607019110479/${lvl1.lvlid})`)
     message.author.send(levelembed);
+    return;
   }
   if(check1 === true)
   {
@@ -121,8 +122,13 @@ client.on("message",async function(message)
       }
       }
 
-
+      return;
     }
+    
+  }
+  else if(message.content === anstothislevel && anstothislevel === `kenya`)
+  {
+    message.lineReply(`Kenya sugondeez nuts `);
   }
   if(message.content === anstothislevel)
   {
@@ -802,3 +808,4 @@ client.on("message",async function(message){
 })
 
 client.login(`ODMyMjA0MjY5NDM1NzQ4MzUz.YHgYnw.MwMi-8Rq9D3QbgkcmLQ_TWc8iUY`)
+
