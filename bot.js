@@ -45,7 +45,6 @@ client.on("message",async function(message)
     const hii =await lvlmap.findOne({lvl: userdata.level});
     if(!hii)
     {
-      client.guilds.cache.get(`777607607019110479`).channels.cache.get(`832673765854806116`).send(`<@484692654731427843> level ${userdata.level} has no answer`)
       return;
     }
     anstothislevel = hii.lvlans;
@@ -103,7 +102,7 @@ client.on("message",async function(message)
       .setDescription(`[Level ${userdata.level} link](https://discord.com/channels/777607607019110479/${lvl1.lvlid})`)
     message.author.send(levelembed);
   }
-  else if(check1 === true)
+  if(check1 === true)
   {
     if(check2 === 0) return;
     ques = check2;
@@ -125,7 +124,7 @@ client.on("message",async function(message)
 
     }
   }
-  else if(message.content === anstothislevel)
+  if(message.content === anstothislevel)
   {
     console.log(`Hi im here ${message.content}: ${anstothislevel}`)
     let levelplus = userdata.level+1;
@@ -137,9 +136,17 @@ client.on("message",async function(message)
           level: levelplus,
       },
     });
-    if(levelplus>15) //maxlevel
+    if(levelplus===16) //maxlevel
     {
+      client.guilds.cache.get(`777607607019110479`).members.cache.get(`${message.author.id}`).roles.remove(`849571441925423124`);
+      client.guilds.cache.get(`777607607019110479`).members.cache.get(`${message.author.id}`).roles.add(`848561287410876427`)
       message.author.send(`Congratulations! You have completed the Puzzel!`)
+      client.guilds.cache.get(`777607607019110479`).channels.cache.get(`831428870719930380`).send(`<@${message.author.id}> has completed the Puzzle!`);
+      const lvllog = new Discord.MessageEmbed()
+        .setColor(`#0099ff`)
+        .setAuthor(`${message.author.tag}`,message.author.displayAvatarURL({ dynamic: true, size: 256 }))
+        .setDescription(`<@${message.author.id}> has completed the Puzzle!`)
+      client.guilds.cache.get(`777607607019110479`).channels.cache.get('832476253284991006').send(lvllog);
     }
 
     else {
@@ -348,7 +355,7 @@ client.on("message",async function(message){
   if(message.content.startsWith(`+dm`))
   {
   for(var x = 0;x<wordlist.length;x++)
-  {
+  { 
     if ((dmdRecently.has(message.author.id))&&!(message.member.hasPermission("ADMINISTRATOR"))) {
         message.lineReply(`Wait a while lol`)
         .then(msg => {
@@ -367,6 +374,23 @@ client.on("message",async function(message){
     splitmessage.splice(0,1);
     if(splitmessage.length === 0){
       message.lineReply(`Who da fuck do I dm buddy`)
+      return;
+    }
+    if(splitmessage[0] === `inrole` && message.member.hasPermission("ADMINISTRATOR"))
+    {
+      roleid = splitmessage[1].match(/\d+/g);
+      role = message.guild.roles.cache.get(roleid);
+      if(!role) return message.lineReply(`No such role`);
+      users = message.guild.roles.cache.get(roleid).members;
+      for(x in users)
+      {
+        usertodm = users[x].id;
+        splitmessage.splice(0,1);
+        msg = splitmessage.join(` `);
+        message.guild.members.cache.get(usertodm).send(msg);
+        
+      }
+      message.lineReply(`Done ✅`);
       return;
     }
     userid11 = splitmessage[0];
@@ -416,6 +440,7 @@ client.on("message",async function(message)
   if(message.author.bot) return;
   if(message.guild === null) return;
   if(!message.member.hasPermission("ADMINISTRATOR")) return;
+
   if(message.content.startsWith(`+smd`))
   {
       hmm = message.content.split(` `);
