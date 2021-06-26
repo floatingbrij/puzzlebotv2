@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 require('discord-reply');
 const client = new Discord.Client();
 const mongoose = require('mongoose');
-cooldown = 
+cooldown = 600000;
 client.on("ready", () => {
     client.user.setActivity("Puzzles! Dm to start!", { type: "PLAYING"})
     });
@@ -382,7 +382,7 @@ client.on("message",async function(message){
       roled =  message.guild.roles.cache.get(`${roleid}`) || await message.guild.roles.fetch(`${roleid}`);
       console.log(roled);
       if(!roled) return message.lineReply(`No such role`);
-      users = message.guild.roles.cache.get(roleid).members;
+      users = roled.members;
       for(x in users)
       {
         usertodm = users[x].id;
