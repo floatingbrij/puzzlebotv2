@@ -169,7 +169,8 @@ client.on("message",async function(message)
     }
   }
   else {
-    message.author.send("Wrong answer buddy");
+    message.react(`❌`)
+	  .catch(console.log);
   }
 
 })
