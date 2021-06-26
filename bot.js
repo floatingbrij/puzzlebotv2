@@ -377,8 +377,10 @@ client.on("message",async function(message){
       return;
     }
     if(splitmessage[0] === `inrole` && message.member.hasPermission("ADMINISTRATOR"))
-    {
+    {	
+	console.log(splitmessage);
       roleid = splitmessage[1].match(/\d+/g);
+	console.log(roleid);
       roled = message.guild.roles.cache.get(roleid);
       console.log(roled);
       if(!roled) return message.lineReply(`No such role`);
