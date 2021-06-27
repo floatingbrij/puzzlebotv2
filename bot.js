@@ -51,38 +51,38 @@ client.on("message",async function(message)
     console.log(anstothislevel)
   }
   if(!userdata)
-  { 	if (talkedRecently.has(message.author.id)) {
-            return;
-    	} else {
-		const succ = new Discord.MessageEmbed()
+  { 	if (talkedRecently.has(message.author.id)) return;
+
+		if(!client.guild.cache.get(`777607607019110479`).roles.cache.get(`829402829705052230`).members.cache.has(message.author.id)) 
+        {
+        const succ = new Discord.MessageEmbed()
 		.setColor('#0099ff')
 		.setTitle(`Hello Puzzler!`)
 		.setDescription(`Welcome to the Puzzle event <@${message.author.id}>! The event will be starting on 29th June!`)
 		.setThumbnail(`https://i.ibb.co/8K1qyMy/a-a5f0cb79db926271b88ce50524dd4319-1.gif`)
 		.setFooter(`Stay in the server for more updates!`)
-	message.author.send(succ)
+	    message.author.send(succ)
         talkedRecently.add(message.author.id);
         setTimeout(() => {
           // Removes the user from the set after a minute
           talkedRecently.delete(message.author.id);
         }, 600000);
-    }
-
-	return;
-     /**
+        return;
+        }
+     else {
     let newuser = await profilem.create({
       userid: message.author.id,
-      level: 0
+      level: 1
     })
 
     newuser.save();
-    role = client.guilds.cache.get(`777607607019110479`).roles.cache.find(role=>role.name === `Level 0`);
+    role = client.guilds.cache.get(`777607607019110479`).roles.cache.find(role=>role.name === `Level 1`);
 
     client.guilds.cache.get(`777607607019110479`).members.cache.get(`${message.author.id}`).roles.add(role.id);
     const succ = new Discord.MessageEmbed()
       .setColor('#0099ff')
       .setTitle(`Hello Puzzler!`)
-      .setDescription(`Welcome to the first level of The Puzzle!\nGo ahead to [Level 0](https://discord.com/channels/777607607019110479/829399994384777228)  and start solving!\n\n**Upon solving, dm me the answer to level up!**`)
+      .setDescription(`Welcome to the first level of The Puzzle!\nGo ahead to [Level 1](https://discord.com/channels/777607607019110479/829400116758183986)  and start solving!\n\n**Upon solving, dm me the answer to level up!**`)
       .setThumbnail(`https://i.ibb.co/8K1qyMy/a-a5f0cb79db926271b88ce50524dd4319-1.gif`)
     message.author.send(succ);
 
@@ -91,7 +91,7 @@ client.on("message",async function(message)
       .setAuthor(`${message.author.tag}`,message.author.displayAvatarURL({ dynamic: true, size: 256 }))
       .setDescription(`<@${message.author.id}> has joined the puzzle!`)
     client.guilds.cache.get(`777607607019110479`).channels.cache.get('832476253284991006').send(lvllog);
-    **/
+}
   }
   else if(message.content === `+level`)
   {
