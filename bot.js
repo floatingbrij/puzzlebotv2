@@ -53,7 +53,7 @@ client.on("message",async function(message)
   if(!userdata)
   { 	if (talkedRecently.has(message.author.id)) return;
 
-		if(!client.guild.cache.get(`777607607019110479`).roles.cache.get(`829402829705052230`).members.cache.has(message.author.id)) 
+		if(!client.guilds.cache.get(`777607607019110479`).roles.cache.get(`829402829705052230`).members.cache.has(message.author.id)) 
         {
         const succ = new Discord.MessageEmbed()
 		.setColor('#0099ff')
