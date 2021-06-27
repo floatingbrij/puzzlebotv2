@@ -91,6 +91,7 @@ client.on("message",async function(message)
       .setAuthor(`${message.author.tag}`,message.author.displayAvatarURL({ dynamic: true, size: 256 }))
       .setDescription(`<@${message.author.id}> has joined the puzzle!`)
     client.guilds.cache.get(`777607607019110479`).channels.cache.get('832476253284991006').send(lvllog);
+return;
 }
   }
   else if(message.content === `+level`)
@@ -112,7 +113,12 @@ client.on("message",async function(message)
     {
       message.author.send(`Congratulations! You have won this round of Gold Rush!`)
       check1 = false;
-      client.guilds.cache.get(`777607607019110479`).channels.cache.get(`832476253284991006`).send(`<@${message.author.id}> has won gold rush ${answer.lvl}`)
+	const solved = new Discord.MessageEmbed()
+        .setColor(`#FFD700`)
+        .setAuthor(`${message.author.tag}`,message.author.displayAvatarURL({ dynamic: true, size: 256 }))
+        .setDescription(`<@${message.author.id}> has won a Gold Rush!`)
+
+        client.guilds.cache.get(`777607607019110479`).channels.cache.get(`832476253284991006`).send(solved);
       //need to message everyone else
       let users = client.guilds.cache.get(`777607607019110479`).roles.cache.get(`856350943092015114`).members.map(m=>m.user.id);
       for(x in users)
