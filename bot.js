@@ -72,7 +72,7 @@ client.on("message",async function(message)
      else {
     let newuser = await profilem.create({
       userid: message.author.id,
-      level: 1
+      level: 0
     })
 
     newuser.save();
