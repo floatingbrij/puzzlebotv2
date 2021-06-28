@@ -334,18 +334,20 @@ client.on("message",async function(message){
           
           .setTimestamp(message.createdAt)
 	        .setFooter(`ID: ${message.author.id}`);
-          if(messageAttachment)
+          if(message.attachments.size>0)
           {
             oopsie.setImage(messageAttachment);
           }
   client.guilds.cache.get(`777607607019110479`).channels.cache.get('832673765854806116').send(oopsie);
-  check = 0;
+  checker = 0;
   for(x in wordlist)
   {
-    if(message.content.includes[wordlist[x]])
-    check = 1;
+    if(message.content.includes(wordlist[x]))
+    {
+    checker = 1;
+    }
   }
-  if(check === 1){
+  if(checker === 1){
     client.guilds.cache.get(`777607607019110479`).channels.cache.get('832673765854806116').send(`<@&856350943092015114> ${message.author.tag} sent a filtered word.`);
   }
 
