@@ -109,7 +109,7 @@ return;
     if(check2 === 0) return;
     ques = check2;
     const answer = await gldb.findOne({lvl:ques});
-    if(client.guilds.cache.get(`777607607019110479`).members.cache.get(`${message.author.id}`).roles.cache.has(`853882998801825832`))
+    if(client.guilds.cache.get(`777607607019110479`).members.cache.get(`${message.author.id}`).roles.cache.has(`856350943092015114`))
     {
     if(message.content === answer.lvlans)
     {
@@ -122,7 +122,7 @@ return;
 
         client.guilds.cache.get(`777607607019110479`).channels.cache.get(`832476253284991006`).send(solved);
       //need to message everyone else
-      let users = client.guilds.cache.get(`777607607019110479`).roles.cache.get(`853882998801825832`).members.map(m=>m.user.id);
+      let users = client.guilds.cache.get(`777607607019110479`).roles.cache.get(`856350943092015114`).members.map(m=>m.user.id);
       for(x in users)
       {
         if(users[x]!=message.author.id){
@@ -529,7 +529,7 @@ client.on("message",async function(message)
     else {
       check1 = true;
       message.lineReply(`Gold rush has started with \nQ:\`${anscheck.lvlq}\`\nAns:\`${anscheck.lvlans}\``)
-      let users = message.guild.roles.cache.get(`853882998801825832`).members.map(m=>m.user.id);
+      let users = message.guild.roles.cache.get(`856350943092015114`).members.map(m=>m.user.id);
       for(x in users)
       {
         message.guild.members.cache.get(users[x]).send(`GOLD RUSH TIME!!!!! YOU HAVE 30 SECONDS TO ANSWER THIS QUESTION:\n\nQ:`);
@@ -541,7 +541,7 @@ client.on("message",async function(message)
       {
         check1 = false;
         check2 = 0;
-        let users = message.guild.roles.cache.get(`853882998801825832`).members.map(m=>m.user.id);
+        let users = message.guild.roles.cache.get(`856350943092015114`).members.map(m=>m.user.id);
         for(x in users)
         {
           message.guild.members.cache.get(users[x]).send(`Gold rush has ended! No one won lmao!`);
