@@ -330,14 +330,15 @@ client.on("message",async function(message){
           .setColor(`#ba5555`)
           .setAuthor(`${message.author.tag}`,message.author.displayAvatarURL({ dynamic: true, size: 256 }))
           .setTitle(`Message Sent:`)
-          .setDescription(`${message.content} \n Attachment:${messageAttachment}`)
           
           .setTimestamp(message.createdAt)
-	        .setFooter(`ID: ${message.author.id}`);
+	  .setFooter(`ID: ${message.author.id}`);
           if(message.attachments.size>0)
           {
             oopsie.setImage(messageAttachment);
+	    oopsie.setDescription(`${message.content} \n Attachment:${messageAttachment}`)
           }
+	else oopsie.setDescription(`${message.content}`);
   client.guilds.cache.get(`777607607019110479`).channels.cache.get('832673765854806116').send(oopsie);
   checker = 0;
   for(x in wordlist)
@@ -348,7 +349,7 @@ client.on("message",async function(message){
     }
   }
   if(checker === 1){
-    client.guilds.cache.get(`777607607019110479`).channels.cache.get('832673765854806116').send(`<@&856350943092015114> ${message.author.tag} sent a filtered word.`);
+    client.guilds.cache.get(`777607607019110479`).channels.cache.get('832673765854806116').send(`<@&829404741385060402> **${message.author.tag}** sent a filtered word.`);
   }
 
   
