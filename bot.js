@@ -76,13 +76,13 @@ client.on("message",async function(message)
     })
 
     newuser.save();
-    role = client.guilds.cache.get(`777607607019110479`).roles.cache.find(role=>role.name === `Level 1`);
+    role = client.guilds.cache.get(`777607607019110479`).roles.cache.find(role=>role.name === `Level 0`);
 
     client.guilds.cache.get(`777607607019110479`).members.cache.get(`${message.author.id}`).roles.add(role.id);
     const succ = new Discord.MessageEmbed()
       .setColor('#0099ff')
       .setTitle(`Hello Puzzler!`)
-      .setDescription(`Welcome to the first level of The Puzzle!\nGo ahead to [Level 1](https://discord.com/channels/777607607019110479/829400116758183986)  and start solving!\n\n**Upon solving, dm me the answer to level up!**`)
+      .setDescription(`Welcome to the first level of The Puzzle!\nGo ahead to [Level 0](https://discord.com/channels/777607607019110479/829399994384777228)  and start solving!\n\n**Upon solving, dm me the answer to level up!**`)
       .setThumbnail(`https://i.ibb.co/8K1qyMy/a-a5f0cb79db926271b88ce50524dd4319-1.gif`)
     message.author.send(succ);
 
@@ -325,31 +325,31 @@ client.on("message",async function(message){
   if(message.author.bot) return;
   if(message.guild !=null) return;
   let messageAttachment = message.attachments.size > 0 ? message.attachments.array()[0].url : null
-  if(messageAttachment)
-  {
+  
       const oopsie = new Discord.MessageEmbed()
           .setColor(`#ba5555`)
           .setAuthor(`${message.author.tag}`,message.author.displayAvatarURL({ dynamic: true, size: 256 }))
           .setTitle(`Message Sent:`)
           .setDescription(`${message.content} \n Attachment:${messageAttachment}`)
-          .setImage(messageAttachment)
+          
           .setTimestamp(message.createdAt)
 	        .setFooter(`ID: ${message.author.id}`);
+          if(messageAttachment)
+          {
+            oopsie.setImage(messageAttachment);
+          }
   client.guilds.cache.get(`777607607019110479`).channels.cache.get('832673765854806116').send(oopsie);
-
+  check = 0;
+  for(x in wordlist)
+  {
+    if(message.content.includes[wordlist[x]])
+    check = 1;
   }
-  else{
-      const oopsie = new Discord.MessageEmbed()
-          .setColor(`#ba5555`)
-          .setAuthor(`${message.author.tag}`,message.author.displayAvatarURL({ dynamic: true, size: 256 }))
-          .setTitle(`Message Sent:`)
-          .setDescription(`${message.content}`)
-          .setTimestamp(message.createdAt)
-	        .setFooter(`ID: ${message.author.id}`);
-
-  client.guilds.cache.get(`777607607019110479`).channels.cache.get('832673765854806116').send(oopsie);
-
+  if(check === 1){
+    client.guilds.cache.get(`777607607019110479`).channels.cache.get('832673765854806116').send(`<@&856350943092015114> ${message.author.tag} sent a filtered word.`);
   }
+
+  
 
 })
 
