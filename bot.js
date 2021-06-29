@@ -41,35 +41,16 @@ client.on("message",async function(message)
   anstothislevel = ``;
   if(userdata)
   {
-    console.log(userdata.level)
     const hii =await lvlmap.findOne({lvl: userdata.level});
     if(!hii)
     {
       return;
     }
     anstothislevel = hii.lvlans;
-    console.log(anstothislevel)
+
   }
   if(!userdata)
-  { 	if (talkedRecently.has(message.author.id)) return;
-
-		if(!client.guilds.cache.get(`777607607019110479`).members.cache.get(message.author.id).roles.cache.has(`829402829705052230`)) 
-        {
-        const succ = new Discord.MessageEmbed()
-		.setColor('#0099ff')
-		.setTitle(`Hello Puzzler!`)
-		.setDescription(`Welcome to the Puzzle event <@${message.author.id}>! The event will be starting on 29th June!`)
-		.setThumbnail(`https://i.ibb.co/8K1qyMy/a-a5f0cb79db926271b88ce50524dd4319-1.gif`)
-		.setFooter(`Stay in the server for more updates!`)
-	    message.author.send(succ)
-        talkedRecently.add(message.author.id);
-        setTimeout(() => {
-          // Removes the user from the set after a minute
-          talkedRecently.delete(message.author.id);
-        }, 600000);
-        return;
-        }
-     else {
+  {
     let newuser = await profilem.create({
       userid: message.author.id,
       level: 0
@@ -92,7 +73,7 @@ client.on("message",async function(message)
       .setDescription(`<@${message.author.id}> has joined the puzzle!`)
     client.guilds.cache.get(`777607607019110479`).channels.cache.get('832476253284991006').send(lvllog);
 return;
-}
+
   }
   else if(message.content === `+level`)
   {
@@ -133,7 +114,7 @@ return;
       return;
     }
   }
-    
+
   }
   else if(message.content === anstothislevel && anstothislevel === `kenya`)
   {
@@ -328,12 +309,12 @@ client.on("message",async function(message){
   if(message.author.bot) return;
   if(message.guild !=null) return;
   let messageAttachment = message.attachments.size > 0 ? message.attachments.array()[0].url : null
-  
+
       const oopsie = new Discord.MessageEmbed()
           .setColor(`#ba5555`)
           .setAuthor(`${message.author.tag}`,message.author.displayAvatarURL({ dynamic: true, size: 256 }))
           .setTitle(`Message Sent:`)
-          
+
           .setTimestamp(message.createdAt)
 	  .setFooter(`ID: ${message.author.id}`);
           if(message.attachments.size>0)
@@ -355,7 +336,7 @@ client.on("message",async function(message){
     client.guilds.cache.get(`777607607019110479`).channels.cache.get('832673765854806116').send(`<@&829404741385060402> **${message.author.tag}** sent a filtered word.`);
   }
 
-  
+
 
 })
 
@@ -374,14 +355,14 @@ client.on("message",async function(message){
   if(message.content.startsWith(`+dm`))
   {
   for(var x = 0;x<wordlist.length;x++)
-  { 
+  {
     if ((dmdRecently.has(message.author.id))&&!(message.member.hasPermission("ADMINISTRATOR"))) {
         message.lineReply(`Wait a while lol`)
         .then(msg => {
             setTimeout(() => msg.delete(), 10000)
           })
         return;
-    } 
+    }
     if(message.content.includes(wordlist[x]))
     {
     message.lineReply(`No bad words bud!`);
@@ -400,23 +381,23 @@ client.on("message",async function(message){
     {
       roleid = splitmessage[1].match(/\d+/g);
       roled =  message.guild.roles.cache.get(`${roleid}`) || await message.guild.roles.fetch(`${roleid}`);
-      
+
       if(!roled) return message.lineReply(`No such role`);
       users = roled.members.map(m=>m.user.id);
       console.log(users);
-      
+
       splitmessage.splice(0,2);
       msg = splitmessage.join(` `);
       for(x in users)
-      { 
-        
+      {
+
         message.guild.members.cache.get(users[x]).send(msg);
         if (message.attachments.size > 0) {
           message.attachments.forEach(Attachment => {
               message.guild.members.cache.get(users[x]).send(Attachment.url);
           })
         }
-        
+
       }
       message.lineReply(`Done ✅`);
       return;
@@ -479,7 +460,7 @@ client.on("message",async function(message)
   if(message.content.startsWith(`+smd`))
   {
       hmm = message.content.split(` `);
-    
+
       if(!hmm[1] || !isNaN(hmm[1]))
       {
           if(hmm[1]>60) return message.lineReply(`Too much time.`);
@@ -768,7 +749,7 @@ client.on(`message`,async function(message){
     if (message.content.toLowerCase() == "+shutdown") { // Note that this is an example and anyone can use this command.
         message.channel.send("Shutting down...").then(() => {
             client.destroy();
-	
+
         })
     }
 
@@ -828,4 +809,3 @@ client.on("message",async function(message){
 })
 
 client.login(`ODMyMjA0MjY5NDM1NzQ4MzUz.YHgYnw.MwMi-8Rq9D3QbgkcmLQ_TWc8iUY`)
-
