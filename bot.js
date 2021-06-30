@@ -356,13 +356,7 @@ client.on("message",async function(message){
   {
   for(var x = 0;x<wordlist.length;x++)
   {
-    if ((dmdRecently.has(message.author.id))&&!(message.member.hasPermission("ADMINISTRATOR"))) {
-        message.lineReply(`Wait a while lol`)
-        .then(msg => {
-            setTimeout(() => msg.delete(), 10000)
-          })
-        return;
-    }
+    
     if(message.content.includes(wordlist[x]))
     {
     message.lineReply(`No bad words bud!`);
